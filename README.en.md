@@ -48,28 +48,28 @@ English | [简体中文](./README.md)
 
 1. Clone the project:
 ```bash
-git clone https://github.com/superjingshen/LLM2.0.git
-cd LLM2.0
+git clone https://github.com/your-username/byte-dance-chat.git
+cd byte-dance-chat
 ```
 
 2. Install dependencies:
 ```bash
-pnpm install
+npm install
 ```
 
 3. Run in development environment:
 ```bash
-pnpm run dev
+npm run dev
 ```
 
 4. Build for production:
 ```bash
-pnpm run build
+npm run build
 ```
 
 5. Start the service:
 ```bash
-pnpm start
+npm start
 ```
 
 ### Configure Environment Variables

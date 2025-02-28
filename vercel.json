@@ -1,17 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/remix"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
+  "framework": "remix",
+  "buildCommand": "npm run build",
+  "outputDirectory": "public/build",
   "env": {
     "VITE_COZE_DEFAULT_TOKEN": "${VITE_COZE_DEFAULT_TOKEN}",
     "VITE_COZE_DEFAULT_URL": "${VITE_COZE_DEFAULT_URL}",
