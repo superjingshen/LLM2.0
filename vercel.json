@@ -3,13 +3,13 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node"
+      "use": "@vercel/remix"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "build/index.js"
+      "dest": "/$1"
     }
   ],
   "env": {
