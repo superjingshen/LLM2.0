@@ -36,40 +36,39 @@
 2. **优秀的用户体验**：
    - 响应式设计
    - 流畅的交互体验
-   - 支持暗色/亮色主题切换
 
 ## 四、快速开始
 
 ### 环境要求
 - Node.js 16.x 或更高版本
-- pnpm 7.x 或更高版本
+- npm 7.x 或更高版本
 
 ### 安装与运行
 
 1. 克隆项目：
 ```bash
-git clone https://github.com/your-username/byte-dance-chat.git
+git clone https://github.com/ByteDance/byte-dance-chat.git
 cd byte-dance-chat
 ```
 
 2. 安装依赖：
 ```bash
-pnpm install
+npm install
 ```
 
 3. 开发环境运行：
 ```bash
-pnpm run dev
+npm run dev
 ```
 
 4. 生产环境构建：
 ```bash
-pnpm run build
+npm run build
 ```
 
 5. 启动服务：
 ```bash
-pnpm start
+npm start
 ```
 
 ### 配置环境变量
