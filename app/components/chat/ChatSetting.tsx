@@ -24,11 +24,19 @@ export default function ChatSetting() {
   useEffect(() => {
     const setting = getStorageSetting();
     if (!setting?.auth_type) {
+      // 直接使用硬编码的默认值，确保在客户端环境中正确加载
+      const defaultToken = "pat_Y0y7T02wubyquotV8CsyLiCjLxSTv8WhL1gHuRrHf5kVAESXytYQaGyWYAozHQE4";
+      const defaultBotId = "7476032503284351014";
+      const defaultUrl = "https://www.coze.cn/";
+      
+      console.log("使用硬编码的默认值初始化设置");
+      
       const initSetting: SettingInter = {
         auth_type: "one",
         stream: true,
-        custom_url: process.env.COZE_DEFAULT_URL || "https://www.coze.cn/",
-        token: process.env.COZE_DEFAULT_TOKEN || ""
+        custom_url: defaultUrl,
+        token: defaultToken,
+        bot_id: defaultBotId
       };
       setSetting(initSetting);
       setStorageSetting(initSetting);

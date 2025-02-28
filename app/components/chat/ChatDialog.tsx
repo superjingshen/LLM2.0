@@ -16,7 +16,7 @@ export default function ChatDialog() {
           <DialogTrigger>
             <div className="flex gap-3 p-3 rounded-2xl bg-secondary w-[200px] sm:w-[300px] cursor-pointer hover:opacity-70">
               <MagnifyingGlassIcon width={24} />
-              <span>Search...</span>
+              <span>搜索...</span>
             </div>
           </DialogTrigger>
           <DialogContent className="h-[500px] max-w-screen-md rounded-2xl">

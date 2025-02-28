@@ -1,4 +1,4 @@
-import { useChatStore } from "~/store";
+import { useChatStore } from "~/store/index";
 import { useEffect, useRef, useState } from "react";
 import { ChatContentType, MessageInter } from "~/types";
 import Markdown from "~/components/markdown";
@@ -64,12 +64,12 @@ export default function ChatContent({ type }: ChatContentType) {
   return (
     <div
       ref={scrollRef}
-      className={cn("overflow-y-auto flex-1", type === "inline" && "h-[400px]")}
+      className={cn("overflow-y-auto flex-1 px-4 md:px-8 lg:px-16 w-full", type === "inline" && "h-[400px]")}
     >
       {messages.map((item, index) => (
         <div className="my-3" key={index}>
           {item.role === "assistant" && (
-            <div>
+            <div className="max-w-3xl">
               {!item.error ? (
                 item.text ? (
                   <div className="group">
@@ -126,31 +126,39 @@ export default function ChatContent({ type }: ChatContentType) {
             </div>
           )}
           {item.role === "user" && (
-            <div className={"flex items-end flex-col gap-3"}>
-              {item.images && item.images.length > 0 && (
-                <div className="flex flex-wrap gap-3 justify-end">
-                  {item.images?.map((fileItem, fileIndex) => (
-                    <img
-                      src={fileItem.base64}
-                      className="w-[200px] h-[200px] rounded-xl "
-                      key={fileIndex}
-                      alt={fileItem.name}
-                    />
-                  ))}
+            <div className="flex flex-row-reverse gap-4 max-w-2xl lg:max-w-3xl mx-auto lg:ml-auto lg:mr-8">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13Z" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div className="flex flex-col gap-2 flex-1 items-end">
+                {item.images && item.images.length > 0 && (
+                  <div className="flex flex-wrap gap-3 justify-end">
+                    {item.images?.map((fileItem, fileIndex) => (
+                      <img
+                        src={fileItem.base64}
+                        className="w-[200px] h-[200px] rounded-xl "
+                        key={fileIndex}
+                        alt={fileItem.name}
+                      />
+                    ))}
+                  </div>
+                )}
+                {item.files && item.files.length > 0 && (
+                  <div className="flex flex-wrap gap-3 justify-end">
+                    {item.files?.map((fileItem, fileIndex) => (
+                      <FileCard
+                        key={fileIndex}
+                        file={fileItem}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="bg-secondary px-4 py-2 rounded-xl">
+                  <pre className="whitespace-pre-wrap break-words text-right">{item.text}</pre>
                 </div>
-              )}
-              {item.files && item.files.length > 0 && (
-                <div className="flex flex-wrap gap-3 justify-end">
-                  {item.files?.map((fileItem, fileIndex) => (
-                    <FileCard
-                      key={fileIndex}
-                      file={fileItem}
-                    />
-                  ))}
-                </div>
-              )}
-              <div className="max-w-lg bg-secondary px-4 py-2 rounded-xl">
-                <pre className="whitespace-pre-wrap break-words">{item.text}</pre>
               </div>
             </div>
           )}
