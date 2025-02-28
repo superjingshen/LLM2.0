@@ -42,14 +42,14 @@ English | [简体中文](./README.md)
 
 ### Requirements
 - Node.js 16.x or higher
-- pnpm 7.x or higher
+- npm 7.x or higher
 
 ### Installation and Running
 
 1. Clone the project:
 ```bash
-git clone https://github.com/your-username/byte-dance-chat.git
-cd byte-dance-chat
+git clone https://github.com/superjingshen/LLM2.0.git
+cd LLM2.0
 ```
 
 2. Install dependencies:

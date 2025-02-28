@@ -47,7 +47,7 @@
 
 1. 克隆项目：
 ```bash
-git clone https://github.com/ByteDance/byte-dance-chat.git
+git clone https://github.com/superjingshen/byte-dance-chat.git
 cd byte-dance-chat
 ```
 
