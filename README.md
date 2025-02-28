@@ -47,8 +47,8 @@
 
 1. 克隆项目：
 ```bash
-git clone https://github.com/superjingshen/LLM2.0.git
-cd LLM2.0
+git clone https://gitee.com/your-username/byte-dance-chat.git
+cd byte-dance-chat
 ```
 
 2. 安装依赖：
