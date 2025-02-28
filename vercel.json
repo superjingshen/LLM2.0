@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "build/server/index.js"
+    }
+  ],
+  "env": {
+    "VITE_COZE_DEFAULT_TOKEN": "${VITE_COZE_DEFAULT_TOKEN}",
+    "VITE_COZE_DEFAULT_URL": "${VITE_COZE_DEFAULT_URL}",
+    "VITE_COZE_DEFAULT_BOT_ID": "${VITE_COZE_DEFAULT_BOT_ID}"
+  }
+}
