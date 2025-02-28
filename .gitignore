@@ -5,3 +5,13 @@ node_modules
 .env
 
 *.zip
+
+# 敏感文档，仅保留本地
+GIT_GUIDE.md
+UPLOAD_GUIDE.md
+DEPLOY_GUIDE.md
+存储功能实现.md
+核心功能代码分析.md
+项目架构与界面说明.md
+项目详细说明.md
+LLM2.0项目介绍.md
