@@ -127,6 +127,34 @@ export default function ChatInput({ type }: ChatContentType) {
       suggestions: [],
     };
     updateStoreMessage(user, result);
+    
+    // 检查是否需要创建新会话
+    const chatHistory = localStorage.getItem("chat_history");
+    const parsedHistory = chatHistory ? JSON.parse(chatHistory) : [];
+    
+    // 创建新会话
+    const newChatId = Date.now().toString();
+    const newChat = {
+      id: newChatId,
+      title: v || prompt.slice(0, 20),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      messages: [user, result]
+    };
+    
+    // 更新会话历史 - 只在本地存储中更新，不触发事件
+    // 让_index.tsx中的useEffect处理状态更新和事件触发
+    const updatedHistory = parsedHistory.length === 0 ? [newChat] : [...parsedHistory, newChat];
+    localStorage.setItem("chat_history", JSON.stringify(updatedHistory));
+    
+    // 使用setTimeout避免在同一个事件循环中触发多个状态更新
+    setTimeout(() => {
+      // 触发事件通知侧边栏更新并选中新会话
+      window.dispatchEvent(new CustomEvent('chatHistoryUpdate', { 
+        detail: { updatedHistory, activeChatId: newChatId }
+      }));
+    }, 0);
+    
     const newMessage = buildMessage(v);
     const _messages = [...messages, newMessage];
     await getResonse(_messages, abort_controller, user, result);
@@ -229,14 +257,32 @@ export default function ChatInput({ type }: ChatContentType) {
   };
   const updateStoreMessage = (user: MessageInter, result?: MessageInter) => {
     if (result) {
-      if (type === "page") store.setMessages([...store.messages, user, result]);
-      else if (type === "inline")
-        store.setMessagesInline([...store.messages_inline, user, result]);
+      if (type === "page") {
+        const newMessages = [...store.messages, user, result];
+        // 只有当消息确实发生变化时才更新状态
+        if (JSON.stringify(store.messages) !== JSON.stringify(newMessages)) {
+          store.setMessages(newMessages);
+        }
+      } else if (type === "inline") {
+        const newMessages = [...store.messages_inline, user, result];
+        // 只有当消息确实发生变化时才更新状态
+        if (JSON.stringify(store.messages_inline) !== JSON.stringify(newMessages)) {
+          store.setMessagesInline(newMessages);
+        }
+      }
     } else {
       if (type === "page") {
-        store.setMessages([...store.messages, user]);
+        const newMessages = [...store.messages, user];
+        // 只有当消息确实发生变化时才更新状态
+        if (JSON.stringify(store.messages) !== JSON.stringify(newMessages)) {
+          store.setMessages(newMessages);
+        }
       } else if (type === "inline") {
-        store.setMessagesInline([...store.messages_inline, user]);
+        const newMessages = [...store.messages_inline, user];
+        // 只有当消息确实发生变化时才更新状态
+        if (JSON.stringify(store.messages_inline) !== JSON.stringify(newMessages)) {
+          store.setMessagesInline(newMessages);
+        }
       }
     }
   };

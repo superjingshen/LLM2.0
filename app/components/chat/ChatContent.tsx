@@ -21,13 +21,47 @@ export default function ChatContent({ type }: ChatContentType) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     if (type === "inline") {
       setMessages(store.messages_inline);
     } else {
       setMessages(store.messages);
     }
+  }, [store.messages, store.messages_inline, type]);
+
+  // 监听chatHistoryUpdate事件，处理对话删除
+  useEffect(() => {
+    const handleChatHistoryUpdate = (event: CustomEvent<{updatedHistory: any, activeChatId?: string}>) => {
+      // 当有对话被删除时，无论是否还有其他对话，都需要更新消息显示
+      // 如果提供了activeChatId，说明是选中了新对话或创建了新对话
+      // 如果没有提供activeChatId，说明是删除了对话，需要清空当前消息
+      if (!event.detail.activeChatId) {
+        // 直接更新本地状态，而不是调用store方法
+        setMessages([]);
+      }
+    };
+    
+    window.addEventListener('chatHistoryUpdate', handleChatHistoryUpdate as EventListener);
+    return () => {
+      window.removeEventListener('chatHistoryUpdate', handleChatHistoryUpdate as EventListener);
+    };
+  }, []);
+  
+  // 确保在组件挂载时检查是否有聊天历史，如果没有则清空消息
+  useEffect(() => {
+    const chatHistory = localStorage.getItem("chat_history");
+    if (!chatHistory || JSON.parse(chatHistory).length === 0) {
+      setMessages([]);
+      // 只有当store中有消息时才清空，避免不必要的状态更新
+      if (type === "inline" && store.messages_inline.length > 0) {
+        store.setMessagesInline([]);
+      } else if (type === "page" && store.messages.length > 0) {
+        store.setMessages([]);
+      }
+    }
   }, [store, type]);
+
 
   useEffect(() => {
     const distance =
